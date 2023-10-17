@@ -13,7 +13,7 @@ class PizzaModel
     {
         $this->db->query("SELECT pizzaId,
                                  pizzaName,
-                                 pizzaPrice,
+                                 pizzaPrice
                                  FROM pizza
                                  WHERE pizzaIsActive = 1");
         return $this->db->resultSet();
@@ -23,7 +23,7 @@ class PizzaModel
     {
         $this->db->query("SELECT pizzaId,
                                  pizzaName,
-                                 pizzaPrice,
+                                 pizzaPrice
                                  FROM pizza
                                  WHERE pizzaId = :pizzaId");
         $this->db->bind(':pizzaId', $pizzaId);

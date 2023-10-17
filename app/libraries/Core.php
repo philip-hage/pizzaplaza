@@ -43,7 +43,7 @@ class Core
 
         // 20230224 - forgive me, but PHP + apache mod_rewrite is just no fun...
         // especially on a Friday!
-        $incoming = str_replace("/project/", "", $incoming);
+        $incoming = str_replace("/pizzaplaza/", "", $incoming);
 //        var_dump($incoming); exit();
         if (isset($incoming) || !empty($incoming)) {
             //remove the backslash from the front of the url

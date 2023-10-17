@@ -1,6 +1,4 @@
-Options +FollowSymLinks -Multiviews
-RewriteEngine On
+Options +FollowSymLinks -MultiViews
+RewriteEngine on
 
-# Rewrite all requests to index.php in the public folder
 RewriteRule ^([^.]+)/?$ index.php?url=$1 [QSA,L]
-
