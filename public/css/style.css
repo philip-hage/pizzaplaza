@@ -16,3 +16,34 @@ td {
   color: red;
   font-size: 50px;
 }
+
+#selectedPizzasContainer {
+  display: none;
+  background-color: #37752e;
+  max-height: 1000px; /* Set a maximum height for the selected pizzas container */
+  overflow-y: auto; /* Enable vertical scrolling if the content exceeds the maximum height */
+}
+
+#selectedPizzasList {
+  padding: 0; /* Remove default padding for the list */
+}
+
+#selectedPizzasList li {
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column; /* Display content in a column */
+  align-items: center;
+  text-align: center; /* Center text horizontally */
+}
+
+#selectedPizzasList img {
+  max-width: 100px;
+  margin-top: 10px; /* Add margin to push the image to the bottom */
+}
+
+li {
+  list-style: none;
+}
