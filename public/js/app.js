@@ -4,21 +4,12 @@ document.addEventListener("DOMContentLoaded", function () {
     "selectedPizzasContainer"
   );
 
-  
-
-  const basketIcon = document.getElementById("basketIcon");
-  basketIcon.addEventListener("click", function (event) {
-    event.preventDefault();
-    // Toggle the display of the selected pizzas container
-    selectedPizzasContainer.style.display =
-      selectedPizzasContainer.style.display === "none" ? "block" : "none";
-  });
-
   // Add event listeners to the "Add To Cart" buttons
   const addToCartButtons = document.querySelectorAll(".addToCartBtn");
   addToCartButtons.forEach(function (button) {
     button.addEventListener("click", function () {
       const card = button.parentElement;
+      console.log(card);
       const pizzaId = card.querySelector(".pizzaId").value;
       const pizzaName = card.querySelector(".pizzaName").value;
       const pizzaPrice = card.querySelector(".pizzaPrice").value;
@@ -65,42 +56,70 @@ document.addEventListener("DOMContentLoaded", function () {
     selectedPizzasList.innerHTML = "";
 
     if (cart.length > 0) {
-      selectedPizzasContainer.style.display = "block";
-
       cart.forEach(function (pizza, index) {
+        // Create a new list item for each pizza
         const listItem = document.createElement("li");
-        listItem.textContent = `Name: ${pizza.name}, Price: €${pizza.price}, Amount: ${pizza.quantity}`;
+        listItem.classList.add("dr-cart__product");
 
+        // Create an <img> element for pizza image
         const imageUrl = `${URLROOT}${pizza.path}`;
         const pizzaImage = document.createElement("img");
+        pizzaImage.classList.add("dr-cart__img");
         pizzaImage.src = imageUrl;
-        pizzaImage.alt = "Pizza Image";
-        pizzaImage.style.maxWidth = "100px";
 
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.addEventListener("click", function () {
+        // Create an <h2> element for pizza name
+        const pizzaName = document.createElement("h2");
+        pizzaName.classList.add("text-sm");
+        pizzaName.textContent = pizza.name;
+
+        // Create an <h2> element for pizza name
+        const pizzaAmount = document.createElement("h2");
+        pizzaAmount.classList.add("text-sm");
+        pizzaAmount.textContent = pizza.quantity + "x";
+
+        const textDiv = document.createElement("div");
+        textDiv.appendChild(pizzaName);
+        textDiv.appendChild(pizzaAmount);
+
+        // Create a <p> element for pizza price
+        const pizzaPrice = document.createElement("p");
+        pizzaPrice.classList.add("text-sm", "color-contrast-higher");
+        pizzaPrice.textContent = `$${pizza.price}`;
+
+        // Create a button for removing the pizza
+        const removeButton = document.createElement("button");
+        removeButton.classList.add("dr-cart__remove-btn", "margin-top-xxxs");
+        removeButton.textContent = "Remove";
+
+        removeButton.addEventListener("click", function () {
           if (pizza.quantity > 1) {
-            // If quantity is greater than 1, decrease the quantity
+            // If the quantity is greater than 1, decrement the quantity
             pizza.quantity--;
           } else {
-            // If quantity is 1, remove the item from the cart
+            // If the quantity is 1, remove the entire entry from the cart
             cart.splice(index, 1);
           }
+          // Update the local storage after removing an item
           saveCartToLocalStorage();
+          // Update the selected pizzas display
           updateSelectedPizzas();
         });
 
+        const textRightDiv = document.createElement("div");
+        textRightDiv.classList.add("text-right");
+        textRightDiv.appendChild(pizzaPrice);
+        textRightDiv.appendChild(removeButton);
+
         listItem.appendChild(pizzaImage);
-        listItem.appendChild(deleteButton);
+        listItem.appendChild(textDiv);
+        listItem.appendChild(textRightDiv);
+
         selectedPizzasList.appendChild(listItem);
 
         totalPrice += parseFloat(pizza.price) * pizza.quantity;
       });
 
       totalPriceElement.textContent = `Total Price: €${totalPrice.toFixed(2)}`;
-    } else {
-      selectedPizzasContainer.style.display = "none";
     }
   }
 

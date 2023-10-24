@@ -1,0 +1,172 @@
+@use '../base' as *;
+
+/* -------------------------------- 
+
+File#: _1_split-button-v2
+Title: Split Button v2
+Descr: A button that shows two actions on click
+Usage: codyhouse.co/license
+
+-------------------------------- */
+
+.split-btn-v2 {
+  position: relative;
+  z-index: 1;
+}
+
+.split-btn-v2--expanded {
+  .split-btn-v2__btn {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .split-btn-v2__list-wrapper {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .split-btn-v2__list {
+    transform: scale(1);
+  }
+
+  .split-btn-v2__morph-bg {
+    box-shadow: var(--inner-glow-top), var(--shadow-ring), var(--shadow-md)
+  }
+}
+
+.split-btn-v2__btn {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-xxs) var(--space-sm);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-contrast-higher);
+  cursor: pointer;
+  transition: .2s;
+
+  &:hover .split-btn-v2__btn-icon {
+    transform: translateY(1px);
+  }
+
+  &:hover ~ .split-btn-v2__morph-bg {
+    background: var(--color-bg-light);
+    box-shadow: var(--inner-glow-top), var(--shadow-ring), var(--shadow-xs);
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    ~ .split-btn-v2__morph-bg {
+      box-shadow: var(--inner-glow-top), var(--shadow-ring), var(--shadow-sm), 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-contrast-high);
+    }
+  }
+  
+  &:active {
+    transform: translateY(2px);
+  }
+}
+
+.split-btn-v2__btn-icon {
+  transition: .2s;
+}
+
+.split-btn-v2__list-wrapper {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: var(--space-xxxs);
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity .2s;
+}
+
+.split-btn-v2__list {
+  transform: scale(0.5);
+  transition: .2s var(--ease-in-out);
+}
+
+.split-btn-v2__list-item {
+  position: relative;
+  display: flex;
+  gap: var(--space-xxxs);
+  width: 100%;
+  line-height: 1;
+  font-weight: 500;
+  white-space: nowrap;
+  font-size: 1rem;
+  color: var(--color-contrast-higher);
+  padding: var(--space-xxs) var(--space-xs);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    transform: scale(0.95);
+    transition: .2s;
+  }
+
+  &:hover {
+    &::after {
+      transform: scale(1);
+      background-color: alpha(var(--color-contrast-higher), 0.075);
+    }
+
+    .split-btn-v2__anim-path {
+      animation: split-btn-svg-path-anim 2s;
+    }
+  }
+
+  &:focus-visible {
+    outline: none;
+    background-color: alpha(var(--color-primary), 0.15);
+    color: var(--color-primary);
+  }
+}
+
+.split-btn-v2__anim-path {
+  transform-origin: 8px 2px;
+  transform: translateY(-1px);
+}
+
+@keyframes split-btn-svg-path-anim { /* bounce animation */
+  0%, 20%, 40%, 100% {
+    transform: translateY(-1px);
+  }
+
+  10%, 30% {
+    transform: translateY(1px);
+  }
+}
+
+/* morphing background */
+.split-btn-v2__morph-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: var(--radius-md);
+  
+  pointer-events: none;
+  transform-origin: left top;
+  backface-visibility: hidden;
+
+  background-color: var(--color-bg-lighter);
+  box-shadow: var(--inner-glow-top), var(--shadow-ring), var(--shadow-sm);
+
+  transition: box-shadow .2s, transform .2s var(--ease-in-out), background .2s, height .2s var(--ease-in-out), width .2s var(--ease-in-out);
+  will-change: transform, height, width;
+}
