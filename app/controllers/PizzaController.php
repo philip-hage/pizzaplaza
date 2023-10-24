@@ -21,7 +21,7 @@ class PizzaController extends Controller
     {
         if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
+            // ?page=1
             $pizza = $this->pizzaModel->getPizzaByIngredient($post['selected_ingredients']);
             $ingredienten = $this->pizzaModel->getIngredienten();
 
@@ -72,11 +72,15 @@ class PizzaController extends Controller
 
             $cart = json_decode($_POST['cartData'], true); // Assuming you pass the cart data as a JSON string
 
-            foreach ($cart as $pizza) {
-                $this->pizzaModel->addPizzaToOrder($orderId, $pizza['id'], $pizza['quantity']);
-            }
+            if (empty($cart)) {
+                header('Location: ' . URLROOT . 'pizzacontroller/pizzaOverview/1');
+            } else {
+                foreach ($cart as $pizza) {
+                    $this->pizzaModel->addPizzaToOrder($orderId, $pizza['id'], $pizza['quantity']);
+                }
 
-            header('Location: ' . URLROOT . 'pizzacontroller/pizzaOrder/' . $orderId);
+                header('Location: ' . URLROOT . 'pizzacontroller/pizzaOrder/' . $orderId);
+            }
         }
         $data = [
             'title' => 'Pizza Checkout'

@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "selectedPizzasContainer"
   );
 
+  
 
   const basketIcon = document.getElementById("basketIcon");
   basketIcon.addEventListener("click", function (event) {
@@ -64,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
     selectedPizzasList.innerHTML = "";
 
     if (cart.length > 0) {
-      selectedPizzasContainer.style.display = "none";
+      selectedPizzasContainer.style.display = "block";
 
       cart.forEach(function (pizza, index) {
         const listItem = document.createElement("li");

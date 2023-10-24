@@ -20,6 +20,7 @@
         </div>
     </nav>
     <h3 class="text-center"><?= $data['title'] ?></h3>
+    
 
     <div class="container" style="display: flex; height: 100%;">
         <div class="col-6" style="margin-right: 50px;">
