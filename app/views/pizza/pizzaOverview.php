@@ -27,7 +27,7 @@
     <div class="container" style="display: flex; height: 100%;">
         <div style="background-color: azure;" class="col-2">
             <h4>Ingredients Filter</h4>
-            <form action="<?= URLROOT ?>pizzacontroller/pizzaOverview" method="post">
+            <form method="get" action="<?= URLROOT ?>pizzacontroller/pizzaOverview/1/">
                 <ul>
                     <?php foreach ($data['ingrediënten'] as $ingrediënt) : ?>
                         <li>
@@ -39,7 +39,7 @@
                     <?php endforeach; ?>
                 </ul>
                 <button class="btn btn-success " type="submit">Filter</button>
-                <a href="<?= URLROOT ?>pizzacontroller/pizzaOverview/1" class="btn btn-success ">Reset Filter</a>
+                <a href="<?= URLROOT ?>pizzacontroller/pizzaOverview/1/" class="btn btn-success ">Reset Filter</a>
             </form>
         </div>
 
@@ -80,26 +80,26 @@
          kleiner is dan of gelijk is aan 0, wat aangeeft dat er geen vorige pagina is om naar terug te keren.
          De knop leidt naar de vorige pagina in de reeks. -->
                 <li class="page-item <?= ($data['previousPage'] <= 0) ? 'disabled' : ''; ?>">
-                    <a class="page-link" href="<?= URLROOT ?>pizzacontroller/pizzaOverview/<?= $data['previousPage'] ?>">Previous</a>
+                    <a class="page-link" href="<?= URLROOT ?>pizzacontroller/pizzaOverview/<?= $data['previousPage'] ?>/<?= $data['urlQuery'] ?>">Previous</a>
                 </li>
                 <!-- Dit is een lijstitem voor de eerste paginaknop. Als de huidige pagina de eerste pagina is, wordt 'active' toegevoegd
          aan de class van het element, anders wordt het vorige paginanummer of de volgende pagina minus 2 weergegeven. -->
-                <li class="page-item <?= ($data['pageNumber'] == 1) ? 'active' : ''; ?>"><a class="page-link" href="<?= $data['firstPage'] ?>">
+                <li class="page-item <?= ($data['pageNumber'] == 1) ? 'active' : ''; ?>"><a class="page-link" href="<?= URLROOT ?>pizzacontroller/pizzaOverview/<?= $data['firstPage'] ?>/<?= $data['urlQuery'] ?>">
                         <?= $data['firstPage'] ?>
                     </a></li>
                 <?php if ($data['totalPages'] >= 2) : ?>
-                    <li class="page-item <?= ($data['pageNumber'] != 1 && $data['totalPages'] != $data['pageNumber'] || ($data['totalPages'] == 2 && $data['pageNumber'] == 2)) ? 'active' : ''; ?>"><a class="page-link" href="<?= $data['secondPage'] ?>">
+                    <li class="page-item <?= ($data['pageNumber'] != 1 && $data['totalPages'] != $data['pageNumber'] || ($data['totalPages'] == 2 && $data['pageNumber'] == 2)) ? 'active' : ''; ?>"><a class="page-link" href="<?= URLROOT ?>pizzacontroller/pizzaOverview/<?= $data['secondPage'] ?>/<?= $data['urlQuery'] ?>">
                             <?= $data['secondPage'] ?>
                         </a></li>
                 <?php endif; ?>
 
                 <?php if ($data['totalPages'] >= 3) : ?>
-                    <li class="page-item <?= ($data['pageNumber'] == $data['totalPages']) ? 'active' : ''; ?>"><a class="page-link" href="<?= $data['thirdPage'] ?>">
+                    <li class="page-item <?= ($data['pageNumber'] == $data['totalPages']) ? 'active' : ''; ?>"><a class="page-link" href="<?= URLROOT ?>pizzacontroller/pizzaOverview/<?= $data['thirdPage'] ?>/<?= $data['urlQuery'] ?>">
                             <?= $data['thirdPage'] ?>
                         </a></li>
                 <?php endif; ?>
                 <li class="page-item <?= ($data['nextPage'] > $data['totalPages']) ? 'disabled' : ''; ?>">
-                    <a class="page-link" href="<?= URLROOT ?>pizzacontroller/pizzaOverview/<?= $data['nextPage'] ?>">Next</a>
+                    <a class="page-link" href="<?= URLROOT ?>pizzacontroller/pizzaOverview/<?= $data['nextPage'] ?>/<?= $data['urlQuery'] ?>">Next</a>
                 </li>
             </ul>
         </nav>
