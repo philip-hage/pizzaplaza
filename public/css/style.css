@@ -47,3 +47,50 @@ td {
 li {
   list-style: none;
 }
+
+.hidden {
+  display: none;
+}
+
+
+.selected-pizzas {
+  background-color: #f4f4f4;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.selected-pizzas h3 {
+  text-align: center;
+}
+
+#selectedPizzasList2 {
+  list-style-type: none;
+  padding: 0;
+  max-height: 400px; /* Set a maximum height for the selected pizzas container */
+  overflow-y: auto; /* Enable vertical scrolling if the content exceeds the maximum height */
+}
+
+#selectedPizzasList2 li {
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#selectedPizzasList2 li img {
+  max-width: 100px;
+  margin-right: 10px;
+}
+
+#totalPrice {
+  font-weight: bold;
+  font-size: 1.2rem;
+}

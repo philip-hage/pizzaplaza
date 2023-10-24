@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 20 okt 2023 om 14:31
+-- Gegenereerd op: 24 okt 2023 om 09:15
 -- Serverversie: 10.4.28-MariaDB
 -- PHP-versie: 8.2.4
 
@@ -41,6 +41,14 @@ CREATE TABLE `customer` (
   `customerDescription` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Gegevens worden geëxporteerd voor tabel `customer`
+--
+
+INSERT INTO `customer` (`customerId`, `customerName`, `customerStreetName`, `customerHouseNumber`, `customerZipCode`, `customerCity`, `customerEmail`, `customerPhone`, `customerIsActive`, `customerCreateDate`, `customerDescription`) VALUES
+('9MkD', 'Philip', 'Riddersborch ', '88', '3499BJ', 'Houten', 'philip@hage.cc', 681867393, 1, '1698071458', NULL),
+('lqIq', 'Philip Hage', 'dfdfs', '97', '3992BJ', 'Houten', 'flip@gmail.com', 68195721, 1, '1698071550', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -74,11 +82,20 @@ INSERT INTO `ingredients` (`ingredientId`, `ingredientName`, `ingredientIsActive
 CREATE TABLE `order` (
   `orderId` varchar(4) NOT NULL,
   `customerId` varchar(4) NOT NULL,
-  `orderStatus` varchar(255) NOT NULL,
   `orderIsActive` tinyint(1) NOT NULL DEFAULT 1,
   `orderCreateDate` varchar(255) NOT NULL,
   `orderDescription` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `order`
+--
+
+INSERT INTO `order` (`orderId`, `customerId`, `orderIsActive`, `orderCreateDate`, `orderDescription`) VALUES
+('9MkD', '9MkD', 1, '1698071458', ''),
+('lqIq', 'lqIq', 1, '1698071550', ''),
+('t24s', '9MkD', 1, '1698071501', ''),
+('WbGf', '9MkD', 1, '1698071763', '');
 
 -- --------------------------------------------------------
 
@@ -88,8 +105,24 @@ CREATE TABLE `order` (
 
 CREATE TABLE `orderhaspizzas` (
   `orderId` varchar(4) NOT NULL,
-  `pizzaId` varchar(4) NOT NULL
+  `pizzaId` varchar(4) NOT NULL,
+  `pizzaAmount` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `orderhaspizzas`
+--
+
+INSERT INTO `orderhaspizzas` (`orderId`, `pizzaId`, `pizzaAmount`) VALUES
+('9MkD', '3422', 1),
+('9MkD', '4232', 1),
+('lqIq', '2345', 1),
+('lqIq', '3422', 3),
+('t24s', '2345', 1),
+('t24s', '3422', 1),
+('t24s', '4232', 1),
+('WbGf', '2345', 1),
+('WbGf', '3422', 1);
 
 -- --------------------------------------------------------
 

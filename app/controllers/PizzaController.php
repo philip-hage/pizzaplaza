@@ -21,10 +21,10 @@ class PizzaController extends Controller
     {
         if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    
+
             $pizza = $this->pizzaModel->getPizzaByIngredient($post['selected_ingredients']);
             $ingredienten = $this->pizzaModel->getIngredienten();
-    
+
             $data = [
                 'title' => "Pizza shop",
                 'pizza' => $pizza,
@@ -37,7 +37,7 @@ class PizzaController extends Controller
             $pizza = $this->pizzaModel->getAllPizzasByPagination($pagination['offset'], $pagination['recordsPerPage']);
 
             $ingredienten = $this->pizzaModel->getIngredienten();
-    
+
             $data = [
                 'title' => "Pizza shop",
                 'pizza' => $pizza,
@@ -58,8 +58,41 @@ class PizzaController extends Controller
 
     public function pizzaCheckout()
     {
+        if ($_SERVER["REQUEST_METHOD"] == 'POST') {
+            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            $customer = $this->pizzaModel->selectCustomerEmail($post['customeremail']);
+
+            if (isset($customer->customerId)) {
+                $orderId = $this->pizzaModel->createOrder($customer->customerId);
+            } else {
+                $customerId = $this->pizzaModel->createCustomer($post);
+                $orderId = $this->pizzaModel->createOrder($customerId);
+            }
+
+            $cart = json_decode($_POST['cartData'], true); // Assuming you pass the cart data as a JSON string
+
+            foreach ($cart as $pizza) {
+                $this->pizzaModel->addPizzaToOrder($orderId, $pizza['id'], $pizza['quantity']);
+            }
+
+            header('Location: ' . URLROOT . 'pizzacontroller/pizzaOrder/' . $orderId);
+        }
         $data = [
             'title' => 'Pizza Checkout'
         ];
+        $this->view('pizza/pizzaCheckout', $data);
+    }
+
+    public function pizzaOrder($orderId = NULL)
+    {
+        $order = $this->pizzaModel->getOrder($orderId);
+        $pizzas = $this->pizzaModel->getOrderPizzas($orderId);
+        $data = [
+            'title' => 'Pizza Order',
+            'order' => $order,
+            'pizzas' => $pizzas
+        ];
+        $this->view('pizza/pizzaOrder', $data);
     }
 }

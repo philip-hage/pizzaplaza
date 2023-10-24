@@ -18,13 +18,16 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <a id="basketIcon" href="#" class="basket-icon">
+                <i class="fa fa-shopping-basket"></i>
+            </a>
         </div>
     </nav>
     <h3 class="text-center"><?= $data['title'] ?></h3>
     <div class="container" style="display: flex; height: 100%;">
         <div style="background-color: azure;" class="col-2">
             <h4>Ingredients Filter</h4>
-            <form action="<?=URLROOT?>pizzacontroller/pizzaOverview" method="post">
+            <form action="<?= URLROOT ?>pizzacontroller/pizzaOverview" method="post">
                 <ul>
                     <?php foreach ($data['ingrediënten'] as $ingrediënt) : ?>
                         <li>
@@ -36,7 +39,7 @@
                     <?php endforeach; ?>
                 </ul>
                 <button class="btn btn-success " type="submit">Filter</button>
-                <a href="<?=URLROOT?>pizzacontroller/pizzaOverview/1" class="btn btn-success ">Reset Filter</a>
+                <a href="<?= URLROOT ?>pizzacontroller/pizzaOverview/1" class="btn btn-success ">Reset Filter</a>
             </form>
         </div>
 
@@ -66,41 +69,41 @@
             <h4>Selected Pizzas</h4>
             <ul id="selectedPizzasList"></ul>
             <p id="totalPrice"></p> <!-- Add this element for the total price -->
-            <button class="btn btn-success">Checkout</button>
+            <a href="<?= URLROOT; ?>pizzacontroller/pizzaCheckout" class="btn btn-success">Checkout</a>
         </div>
     </div>
 
-    <?php if (!empty($data['pageNumber'])): ?>
-    <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-        <!-- Dit lijstitem wordt gebruikt voor de "Vorige" paginaknop. De 'disabled' class wordt toegevoegd als de waarde van $data['previousPage']
+    <?php if (!empty($data['pageNumber'])) : ?>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <!-- Dit lijstitem wordt gebruikt voor de "Vorige" paginaknop. De 'disabled' class wordt toegevoegd als de waarde van $data['previousPage']
          kleiner is dan of gelijk is aan 0, wat aangeeft dat er geen vorige pagina is om naar terug te keren.
          De knop leidt naar de vorige pagina in de reeks. -->
-        <li class="page-item <?= ($data['previousPage'] <= 0) ? 'disabled' : ''; ?>">
-            <a class="page-link" href="<?=URLROOT?>pizzacontroller/pizzaOverview/<?= $data['previousPage'] ?>">Previous</a>
-        </li>
-        <!-- Dit is een lijstitem voor de eerste paginaknop. Als de huidige pagina de eerste pagina is, wordt 'active' toegevoegd
+                <li class="page-item <?= ($data['previousPage'] <= 0) ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="<?= URLROOT ?>pizzacontroller/pizzaOverview/<?= $data['previousPage'] ?>">Previous</a>
+                </li>
+                <!-- Dit is een lijstitem voor de eerste paginaknop. Als de huidige pagina de eerste pagina is, wordt 'active' toegevoegd
          aan de class van het element, anders wordt het vorige paginanummer of de volgende pagina minus 2 weergegeven. -->
-        <li class="page-item <?= ($data['pageNumber'] == 1) ? 'active' : ''; ?>"><a class="page-link" href="<?= $data['firstPage'] ?>">
-                <?= $data['firstPage'] ?>
-            </a></li>
-        <?php if ($data['totalPages'] >= 2): ?>
-            <li class="page-item <?= ($data['pageNumber'] != 1 && $data['totalPages'] != $data['pageNumber'] || ($data['totalPages'] == 2 && $data['pageNumber'] == 2)) ? 'active' : ''; ?>"><a class="page-link" href="<?= $data['secondPage'] ?>">
-                    <?= $data['secondPage'] ?>
-                </a></li>
-        <?php endif; ?>
+                <li class="page-item <?= ($data['pageNumber'] == 1) ? 'active' : ''; ?>"><a class="page-link" href="<?= $data['firstPage'] ?>">
+                        <?= $data['firstPage'] ?>
+                    </a></li>
+                <?php if ($data['totalPages'] >= 2) : ?>
+                    <li class="page-item <?= ($data['pageNumber'] != 1 && $data['totalPages'] != $data['pageNumber'] || ($data['totalPages'] == 2 && $data['pageNumber'] == 2)) ? 'active' : ''; ?>"><a class="page-link" href="<?= $data['secondPage'] ?>">
+                            <?= $data['secondPage'] ?>
+                        </a></li>
+                <?php endif; ?>
 
-        <?php if ($data['totalPages'] >= 3): ?>
-            <li class="page-item <?= ($data['pageNumber'] == $data['totalPages']) ? 'active' : ''; ?>"><a class="page-link" href="<?= $data['thirdPage'] ?>">
-                    <?= $data['thirdPage'] ?>
-                </a></li>
-        <?php endif; ?>
-        <li class="page-item <?= ($data['nextPage'] > $data['totalPages']) ? 'disabled' : ''; ?>">
-            <a class="page-link" href="<?=URLROOT?>pizzacontroller/pizzaOverview/<?= $data['nextPage'] ?>">Next</a>
-        </li>
-    </ul>
-    </nav>
-<?php endif; ?>
+                <?php if ($data['totalPages'] >= 3) : ?>
+                    <li class="page-item <?= ($data['pageNumber'] == $data['totalPages']) ? 'active' : ''; ?>"><a class="page-link" href="<?= $data['thirdPage'] ?>">
+                            <?= $data['thirdPage'] ?>
+                        </a></li>
+                <?php endif; ?>
+                <li class="page-item <?= ($data['nextPage'] > $data['totalPages']) ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="<?= URLROOT ?>pizzacontroller/pizzaOverview/<?= $data['nextPage'] ?>">Next</a>
+                </li>
+            </ul>
+        </nav>
+    <?php endif; ?>
 
 
     <style>
